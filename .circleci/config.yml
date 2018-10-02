@@ -1,0 +1,17 @@
+# Golang CircleCI 2.0 configuration file
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.9
+    working_directory: /go/src/github.com/samber/go-clevercloud-api
+    steps:
+      - checkout
+      # commands
+      - run: go get github.com/samber/go-clevercloud-api/clever
+      - run: go get -u golang.org/x/lint/golint
+      - run: cd examples
+      - run: go build ./...
+      - run: cd ..
+      - run: golint ./...
+      - run: go vet ./...
